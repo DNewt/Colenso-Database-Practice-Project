@@ -29,7 +29,7 @@ html(lang='en')
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='index') Colenso Database
+          a.navbar-brand(href='http://localhost:3000/') Colenso Database
         // Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right
@@ -48,20 +48,20 @@ html(lang='en')
 
           p
             
-        .col-md-6
-        .container
-            form(action="/search", method="get")
-                input(type="text", name="searchString")
-                input(type="submit", value = "Text")
-        .col-md-6
-        .container
-            form(action="/xquery", method="get")
-                input(type="text", name="searchXQuery")
-                input(type="submit", value = "XQuery")
-        .col-md-6
-        .container
-            form(action="/browse", method="get")
-                input(type="submit", value = "Browse")
+        .container(style="width:500px !important;")
+            form(action="/search", method="get" style=' width:500px; float right; display:inline-block;')
+                input(type="text", name="searchString" class="form-control" style=" width:50% !important; display:inline-block;")
+                input(type="submit", value = "Text" class="btn btn-default" style="margin: 0px 0px 3px 19px;")
+
+
+        .container(style="width:500px !important;")
+            form(action="/xquery", method="get" style=' width:500px; float right; display:inline-block;')
+                input(type="text", name="searchXQuery" class="form-control" style=" width:50% !important; display:inline-block;")
+                input(type="submit", value = "XQuery" class="btn btn-default" style="margin: 0px 0px 3px 19px;")
+
+        .container(style="width:500px !important;")
+            form(action="/browse", method="get" style=' width:500px; float right; display:inline-block;')
+                input(type="submit", value = "Browse" class="btn btn-success" style="margin: 0px 0px 3px 19px;")
 
     .search-results
     .col-md-6
