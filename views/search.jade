@@ -1,6 +1,9 @@
 doctype html
-html(lang='en')
+html
   head
+    title Colenso's Database
+    link(rel='stylesheet', type='text/css', href='css/bootstrap.min.css')
+    script(src='jquery-2.2.2.js')
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -11,6 +14,7 @@ html(lang='en')
     link(href='css/bootstrap.min.css', rel='stylesheet')
     // Custom CSS
     link(href='css/modern-business.css', rel='stylesheet')
+    script(src='css/jquery-2.2.2.js')
     // Custom Fonts
     link(href='font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
@@ -18,9 +22,15 @@ html(lang='en')
     //if lt IE 9
       script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
       script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+    style(type='text/css').
+      body{
+      background-image: url("css/bg.png");
+      }
+      .tdWhite{
+      background-color: #ffffff;
+      }
   body
-    // Navigation
-    nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+    nav.navbar.navbar-inverse(role='navigation')
       .container
         // Brand and toggle get grouped for better mobile display
         .navbar-header
@@ -37,51 +47,105 @@ html(lang='en')
               a(href='search') Search Database
         // /.navbar-collapse
       // /.container
-    // Page Content
-    .container
-      // Features Section
-      .row
-        .col-lg-12
-          h2.page-header The Colenso Project
-        .col-md-6
-          p 
+    .row(style="margin:0px !important;")
+      // START OF LEFT ----------------------------------------------------------- HAND SIDE
+      .col-sm-3.col-md-3.col-lg-3(style='padding: 0px 0px 0px 50px;')
+        h3 Application options: 
+        .radio
+          label
+            input#optionsRadios1(type='radio', name='optionsRadios', value='option1')
+            |                search by text
+        .radio
+          label
+            input#optionsRadios2(type='radio', name='optionsRadios', value='option2')
+            |                search by xQuery
+        .radio
+          label
+            input#optionsRadios3(type='radio', name='optionsRadios', value='option3')
+            |                Upload XML file
+        .radio
+          label
+            input#optionsRadios4(type='radio', name='optionsRadios', value='option4')
+            |                Browse All DB  
+        br
+        br
+        #searchByText.searchByText
+          form(action="/search", method="get")
+            input.form-control(type='text', name="searchString", placeholder='Search by Text', style='width: 70%; display: inline;')
+            button.btn.btn-primary(type='submit', style='margin: 0px 3px 3px 3px;') Search
+        #srchXquery.searchByXquery
+          form(action="/xquery", method="get")
+            input.form-control(type='text', name="searchXQuery", placeholder='Search by xQuery', style='width: 70%; display: inline;')
+            button.btn.btn-primary(type='submit', style='margin: 0px 3px 3px 3px;') Search
+        #uplXML.uploadFile
+          form(action="/upload", method="post", enctype="multipart/form-data")
+            label(for='exampleInputFile') File input
+            input#exampleInputFile(type='file', style='display:inline;', name = "fileUpload")
+            button.btn.btn-primary(type='submit', style='margin: 0px 3px 3px 3px;') upload
+        #brwDB.browseDB
+          form(action="/browse", method="get")
+            .form-group
+              button.btn.btn-success(type='submit', value = "Browse", style='margin: 0px 3px 3px 3px;') Browse
+      // END OF LEFT ----------------------------------------------------------- HAND SIDE
+      .col-sm-7.col-md-7.col-lg-7
+        .display(style='width: 100%; margin: auto;')
+          table.table.table-condensed
+            .search-results
+                ul
+                            tr.success
+                            th.warning #
+                            th.warning File Name
+                    -var a=0
+                    each val in search_results
+                        -a++
+                        -if (a%2==0)
+                            tr.tdWhite
+                                td #{a}
+                                td
+                                    a(href="/documents/#{val}") #{val}
+                        -else
+                            tr.success
+                                td #{a}
+                                td
+                                    a(href="/documents/#{val}") #{val}
 
-          p
-            
-        .container(style="width:500px !important;")
-            form(action="/search", method="get" style=' width:500px; float right; display:inline-block;')
-                input(type="text", name="searchString" class="form-control" style=" width:50% !important; display:inline-block;")
-                input(type="submit", value = "Text" class="btn btn-default" style="margin: 0px 0px 3px 19px;")
 
-
-        .container(style="width:500px !important;")
-            form(action="/xquery", method="get" style=' width:500px; float right; display:inline-block;')
-                input(type="text", name="searchXQuery" class="form-control" style=" width:50% !important; display:inline-block;")
-                input(type="submit", value = "XQuery" class="btn btn-default" style="margin: 0px 0px 3px 19px;")
-
-        .container(style="width:500px !important;")
-            form(action="/browse", method="get" style=' width:500px; float right; display:inline-block;')
-                input(type="submit", value = "Browse" class="btn btn-success" style="margin: 0px 0px 3px 19px;")
-
-    .search-results
-    .col-md-6
-        ul
-            each val in search_results
-                li
-                    a(href="/documents/#{val}") #{val}
-          
-      // Footer
-      footer
-        .row
-          .col-lg-12
-            p Copyright © David Newton 2016
-    // /.container
-    // jQuery
-    script(src='js/jquery.js')
-    // Bootstrap Core JavaScript
-    script(src='js/bootstrap.min.js')
-    // Script to Activate the Carousel
-    script.
-      $('.carousel').carousel({
-      interval: 5000 //changes the speed
-      })
+        //                tr.success
+       //                     td 2
+       //                    td
+      //                          a(href='') FileNamessssssssssssssssssss
+      // START OF RIGHT ----------------------------------------------------------- HAND SIDE
+      //
+        <div class="col-sm-1 col-md-1 col-lg-1" style="background-color: black;">
+        RIGHT COLUMN
+        </div>
+      // END OF RIGHT ----------------------------------------------------------- HAND SIDE
+    script(type='text/javascript').
+      $("#srchXquery").fadeOut();
+      $("#searchByText").fadeOut();
+      $("#uplXML").fadeOut();
+      $("#brwDB").fadeOut();
+      $('#optionsRadios1').click(function() {
+      $("#searchByText").slideDown();
+      $("#srchXquery").slideUp();
+      $("#uplXML").slideUp();
+      $("#brwDB").slideUp();
+      });
+      $('#optionsRadios2').click(function() {
+      $("#srchXquery").slideDown();
+      $("#searchByText").slideUp();
+      $("#uplXML").slideUp();
+      $("#brwDB").slideUp();
+      });
+      $('#optionsRadios3').click(function() {
+      $("#uplXML").slideDown();
+      $("#srchXquery").slideUp();
+      $("#searchByText").slideUp();
+      $("#brwDB").slideUp();
+      });
+      $('#optionsRadios4').click(function() {
+      $("#brwDB").slideDown();
+      $("#uplXML").slideUp();
+      $("#srchXquery").slideUp();
+      $("#searchByText").slideUp();
+      });

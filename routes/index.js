@@ -4,6 +4,10 @@ var basex = require('basex');
 var client = new basex.Session("127.0.0.1", 1984, "admin", "admin");
 client.execute("OPEN Colenso");
 var tei = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; ";
+var multer = require('multer');
+var storage = multer.memoryStorage();
+var upload = multer({storage: storage});
+router.use(upload.single('fileUpload'));
 
 router.get("/",function(req,res){
 	client.execute(tei + " (//name[@type='place'])[1] ", function (error, result) {
@@ -16,6 +20,7 @@ router.get("/",function(req,res){
 });
 
 router.get("/search", function(req,res){
+	
 	client.execute(tei + "for $t in //text where matches($t, '" + req.query.searchString + "', 'i') = true() return db:path($t)",
 		function (error, result) {
 			if(error){
@@ -28,7 +33,7 @@ router.get("/search", function(req,res){
 });
 
 router.get("/browse", function(req,res){
-	client.execute(tei + "for $t in //text where matches($t, '" + " " + "', 'i') = true() return db:path($t)",
+    client.execute("XQUERY db:list('Colenso')",
 		function (error, result) {
 			if(error){
 				res.status(500).send(error);
@@ -40,8 +45,7 @@ router.get("/browse", function(req,res){
 });
 
 router.get("/xquery", function(req,res){
-	console.log("here");
-	client.execute(tei + "for $t in //text where matches($t, '" + req.query.searchXQuery + "', 'i') = true() return db:path($t)",
+	client.execute(tei + req.query.searchXQuery,
 		function (error, result) {
 			if(error){
 				res.status(500).send(error);
@@ -50,6 +54,23 @@ router.get("/xquery", function(req,res){
 			}
 		}
 	);
+});
+
+router.post("/upload", function(req,res){
+	if(req.file){
+		var xml_path = req.file.buffer.toString();
+		var file_path = req.file.originalname;
+		console.log(xml_path);
+		client.execute('ADD TO Colenso/new/'+file_path+' "'+xml_path+'"',
+			function (error, result) {
+				if(error){
+				
+				} else {
+					
+				}
+			}	
+		);
+}
 });
 
 router.get("/documents/*",function(req,res){
