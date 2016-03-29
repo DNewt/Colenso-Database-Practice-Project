@@ -20,8 +20,11 @@ router.get("/",function(req,res){
 });
 
 router.get("/search", function(req,res){
-	
-	client.execute(tei + "for $t in //text where matches($t, '" + req.query.searchString + "', 'i') = true() return db:path($t)",
+
+	var searchString = "'" + req.query.searchString + "'";
+	var stringAndOr = searchString.replace(" AND ", '\' ftand \'').replace(" OR ", '\' ftor \'').replace(" NOT ", '\' ftnot \'');
+
+	client.execute(tei + "for $t in //TEI[. contains text "+stringAndOr+"] return db:path($t)",
 		function (error, result) {
 			if(error){
 				res.status(500).send(error);
