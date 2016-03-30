@@ -95,6 +95,7 @@ html
                             tr.success
                             th.warning #
                             th.warning File Name
+                            th.warning Display
                     -var a=0
                     each val in search_results
                         -a++
@@ -103,23 +104,17 @@ html
                                 td #{a}
                                 td
                                     a(href="/documents/#{val}") #{val}
+                                td
+                                    form(action = "/display/" + val, method = "get")
+                                        button.btn.btn-success(type = "submit" ) Display                                
                         -else
                             tr.success
                                 td #{a}
                                 td
                                     a(href="/documents/#{val}") #{val}
-
-
-        //                tr.success
-       //                     td 2
-       //                    td
-      //                          a(href='') FileNamessssssssssssssssssss
-      // START OF RIGHT ----------------------------------------------------------- HAND SIDE
-      //
-        <div class="col-sm-1 col-md-1 col-lg-1" style="background-color: black;">
-        RIGHT COLUMN
-        </div>
-      // END OF RIGHT ----------------------------------------------------------- HAND SIDE
+                                td     
+                                    form(action = "/display/" + val, method = "get")
+                                        button.btn.btn-success(type = "submit" ) Display                  
     script(type='text/javascript').
       $("#srchXquery").fadeOut();
       $("#searchByText").fadeOut();
@@ -145,7 +140,6 @@ html
       });
       $('#optionsRadios4').click(function() {
       $("#brwDB").slideDown();
-      $("#uplXML").slideUp();
       $("#srchXquery").slideUp();
       $("#searchByText").slideUp();
       });

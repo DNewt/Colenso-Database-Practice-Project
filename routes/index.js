@@ -47,6 +47,19 @@ router.get("/browse", function(req,res){
 	);
 });
 
+router.get("/display/*", function(req,res){
+	var path = req.originalUrl.replace('/display', 'Colenso');
+    client.execute("XQUERY doc('"+path+"')",
+		function (error, result) {
+			if(error){
+				res.status(500).send(error);
+			} else {
+				res.render('display', { title: 'Colenso Project', search_results: result.result});
+			}
+		}
+	);
+});
+
 router.get("/xquery", function(req,res){
 	client.execute(tei + req.query.searchXQuery,
 		function (error, result) {
@@ -63,7 +76,6 @@ router.post("/upload", function(req,res){
 	if(req.file){
 		var xml_path = req.file.buffer.toString();
 		var file_path = req.file.originalname;
-		console.log(xml_path);
 		client.execute('ADD TO Colenso/new/'+file_path+' "'+xml_path+'"',
 			function (error, result) {
 				if(error){

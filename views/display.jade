@@ -1,0 +1,61 @@
+doctype html
+html
+  head
+    title Colenso's Database
+    link(rel='stylesheet', type='text/css', href='/css/bootstrap.min.css')
+    script(src='/css/jquery-2.2.2.js')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Colenso Database
+    // Bootstrap Core CSS
+    link(href='/css/bootstrap.min.css', rel='stylesheet')
+    // Custom CSS
+    link(href='/css/modern-business.css', rel='stylesheet')
+    script(src='/css/jquery-2.2.2.js')
+    // Custom Fonts
+    link(href='/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    //if lt IE 9
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+    style(type='text/css').
+      body{
+      background-image: url("/css/bg.png");
+      }
+      .tdWhite{
+      background-color: #ffffff;
+      }
+  body
+    nav.navbar.navbar-inverse(role='navigation')
+      .container
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='http://localhost:3000/') Colenso Database
+        // Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='search') Search Database
+        // /.navbar-collapse
+      // /.container
+    .row(style="margin:0px !important;")
+      // START OF LEFT ----------------------------------------------------------- HAND SIDE
+      .col-sm-1.col-md-1.col-lg-1(style='padding: 0px 0px 0px 50px;')
+      // END OF LEFT ----------------------------------------------------------- HAND SIDE
+      .col-sm-9.col-md-9.col-lg-9
+        .display(style='width: 100%; margin: auto;')
+          table.table.table-condensed
+            .search-results
+                ul     
+                    th.warning Display
+                        tr.success
+                            td !{search_results}
