@@ -54,7 +54,7 @@ html
         .radio
           label
             input#optionsRadios1(type='radio', name='optionsRadios', value='option1')
-            |                search by text
+            |                Search by text using AND/OR/NOT logical operators
         .radio
           label
             input#optionsRadios2(type='radio', name='optionsRadios', value='option2')
@@ -71,11 +71,11 @@ html
         br
         #searchByText.searchByText
           form(action="/search", method="get")
-            input.form-control(type='text', name="searchString", placeholder='Search by Text', style='width: 70%; display: inline;')
+            input.form-control(type='text', name="searchString", placeholder='Search by Text AND/OR/NOT logical operators', style='width: 70%; display: inline;')
             button.btn.btn-primary(type='submit', style='margin: 0px 3px 3px 3px;') Search
         #srchXquery.searchByXquery
           form(action="/xquery", method="get")
-            input.form-control(type='text', name="searchXQuery", placeholder='Search by xQuery', style='width: 70%; display: inline;')
+            input.form-control(type='text', name="searchXQuery", placeholder='Search by xQuery (Eg: //name)', style='width: 70%; display: inline;')
             button.btn.btn-primary(type='submit', style='margin: 0px 3px 3px 3px;') Search
         #uplXML.uploadFile
           form(action="/upload", method="post", enctype="multipart/form-data")
@@ -106,7 +106,7 @@ html
                                     a(href="/documents/#{val}") #{val}
                                 td
                                     form(action = "/display/" + val, method = "get")
-                                        button.btn.btn-success(type = "submit" ) Display                                
+                                        button.btn.btn-success(type = "submit" ) Display
                         -else
                             tr.success
                                 td #{a}
@@ -114,7 +114,7 @@ html
                                     a(href="/documents/#{val}") #{val}
                                 td     
                                     form(action = "/display/" + val, method = "get")
-                                        button.btn.btn-success(type = "submit" ) Display                  
+                                        button.btn.btn-success(type = "submit" ) Display
     script(type='text/javascript').
       $("#srchXquery").fadeOut();
       $("#searchByText").fadeOut();
@@ -142,4 +142,5 @@ html
       $("#brwDB").slideDown();
       $("#srchXquery").slideUp();
       $("#searchByText").slideUp();
+      $("#uplXML").slideUp();
       });

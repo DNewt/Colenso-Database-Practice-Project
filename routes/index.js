@@ -49,12 +49,12 @@ router.get("/browse", function(req,res){
 
 router.get("/display/*", function(req,res){
 	var path = req.originalUrl.replace('/display', 'Colenso');
-    client.execute("XQUERY doc('"+path+"')",
+	client.execute("XQUERY doc('"+path+"')",
 		function (error, result) {
 			if(error){
 				res.status(500).send(error);
 			} else {
-				res.render('display', { title: 'Colenso Project', search_results: result.result});
+				res.render('display', { title: 'Colenso Project', filepath: path, search_results: result.result});
 			}
 		}
 	);
@@ -79,13 +79,55 @@ router.post("/upload", function(req,res){
 		client.execute('ADD TO Colenso/new/'+file_path+' "'+xml_path+'"',
 			function (error, result) {
 				if(error){
-				
+					res.status(500).send(error);
 				} else {
 					
 				}
 			}	
 		);
-}
+	}
+});
+
+
+router.get("/delete/*", function(req,res){
+	console.log('PATH:',req.query.path);
+	var query = req.originalUrl;
+	var clean_query = query.replace('/delete/Colenso/', '');
+	console.log("query: "+query);
+	console.log("clean_query: "+clean_query);
+	client.execute("DELETE "+clean_query,
+		function (error, result) {
+			if(error){
+				res.status(500).send(error);
+			} else {
+				res.redirect("search");
+			}
+		}	
+	);
+	
+});
+
+
+router.get('/download', function(req, res) {
+	console.log("downloading");
+	var file_path  = req.query.document;
+	console.log(file_path);
+	client.execute("XQUERY doc('"+file_path+"')",
+		function(error, result) {
+			if(error){
+				console.log("ERRORRRR");
+				res.status(500).send(error);
+			} else {
+				console.log(result.result);
+				res.writeHead(200, {
+					'Content-Disposition': 'attachment; filename=' + file_path
+				});
+				console.log("saving doc");
+				res.write(result.result);
+				res.end();  
+			}
+		}
+	)
 });
 
 router.get("/documents/*",function(req,res){

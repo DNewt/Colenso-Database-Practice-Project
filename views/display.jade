@@ -44,7 +44,7 @@ html
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right
             li
-              a(href='search') Search Database
+              a(href='http://localhost:3000/search') Search Database
         // /.navbar-collapse
       // /.container
     .row(style="margin:0px !important;")
@@ -55,7 +55,12 @@ html
         .display(style='width: 100%; margin: auto;')
           table.table.table-condensed
             .search-results
-                ul     
-                    th.warning Display
+                ul
+                    th.warning
+                        a(href="/download?document=" + filepath)
+                            button.btn.btn-success() Download 
+                        a(href="/delete/" + filepath)
+                            button.btn.btn-info(type = "submit") Delete
+                            input(type='hidden', name='path', value=filepath)
                         tr.success
                             td !{search_results}
